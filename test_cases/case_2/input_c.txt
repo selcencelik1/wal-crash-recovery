@@ -1,0 +1,13 @@
+tx_begin T5
+tx_begin T6
+tx_begin T7
+tx_op T5 create record movie Akira Otomo 1988 90 124
+tx_op T6 create record movie Spirited Miyazaki 2001 92 125
+tx_op T7 create record movie Princess Miyazaki 1997 89 134
+tx_op T5 create record movie Ghost Oshii 1995 87 83
+tx_op T6 create record movie Totoro Miyazaki 1988 93 86
+tx_op T7 create record movie Howl Miyazaki 2004 86 119
+tx_commit T6
+tx_op T5 delete record movie Akira
+tx_op T7 create record movie Mononoke Miyazaki 1997 88 134
+crash

@@ -1,0 +1,21 @@
+tx_begin V
+tx_op V search record book Dune
+tx_op V search record book Foundation
+tx_op V search record book Hyperion
+tx_op V search record book Neuromancer
+tx_op V search record book SnowCrash
+tx_op V search record book Tehanu
+tx_op V search record book Earthsea
+tx_op V search record book MobyDick
+tx_op V search record book Lolita
+tx_op V search record book Ulysses
+tx_op V search record book Beloved
+tx_op V search record book Catch22
+tx_op V search record book Beloved2
+tx_op V search record book Sula
+tx_op V search record book Slaughter
+tx_op V range_search book year 1950 1980
+tx_op V range_search book year 1850 1900
+tx_op V range_search book year 2000 2025
+tx_op V range_search book copies 20 50
+tx_commit V

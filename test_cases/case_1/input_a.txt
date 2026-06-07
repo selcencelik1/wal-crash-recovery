@@ -1,0 +1,10 @@
+tx_begin T1
+tx_op T1 create type book 4 1 title str author str year int copies int
+tx_op T1 create record book Dune Herbert 1965 100
+tx_op T1 create record book Foundation Asimov 1951 50
+tx_op T1 create record book Hyperion Simmons 1989 80
+tx_commit T1
+tx_begin T2
+tx_op T2 create record book Neuromancer Gibson 1984 75
+tx_op T2 create record book SnowCrash Stephenson 1992 60
+crash

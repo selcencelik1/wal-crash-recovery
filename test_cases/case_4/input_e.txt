@@ -1,0 +1,9 @@
+tx_begin T12
+tx_op T12 create record product P029 Strap 14 220 62
+tx_op T12 create record product P030 Clip 9 350 58
+tx_op T12 create record product P031 Pin 6 700 52
+tx_op T12 delete record product P020
+tx_commit T12
+tx_begin T13
+tx_op T13 create record product P032 Cap 11 280 64
+tx_commit T13

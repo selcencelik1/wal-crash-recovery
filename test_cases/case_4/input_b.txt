@@ -1,0 +1,10 @@
+tx_begin T6
+tx_op T6 create record product P010 Bracket 25 40 70
+tx_op T6 create record product P011 Hinge 30 60 75
+tx_op T6 create record product P012 Latch 18 90 60
+tx_op T6 create record product P013 Knob 12 150 55
+tx_op T6 create record product P014 Lever 22 80 65
+tx_commit T6
+tx_begin T7
+tx_op T7 create record product P015 Spring 5 500 50
+crash

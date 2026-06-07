@@ -1,0 +1,13 @@
+tx_begin T10
+tx_op T10 create record product P021 Gear 55 45 82
+tx_op T10 create record product P022 Bushing 15 200 58
+tx_op T10 create record product P023 Coupling 65 35 76
+tx_op T10 create record product P024 Shaft 80 25 88
+tx_op T10 create record product P025 Bearing2 38 90 74
+tx_op T10 delete record product P011
+tx_commit T10
+tx_begin T11
+tx_op T11 create record product P026 Flange 95 15 67
+tx_op T11 create record product P027 Bolt2 7 800 52
+tx_op T11 create record product P028 Nut2 4 600 48
+crash

@@ -1,0 +1,11 @@
+tx_begin T8
+tx_op T8 delete record movie Memento
+tx_commit T8
+tx_begin T9
+tx_begin T10
+tx_op T9 create record movie LaLa Chazelle 2016 80 128
+tx_op T10 create record movie Whiplash Chazelle 2014 87 107
+tx_op T9 create record movie FirstMan Chazelle 2018 75 141
+tx_commit T9
+tx_op T10 create record movie Babylon Chazelle 2022 65 189
+tx_commit T10

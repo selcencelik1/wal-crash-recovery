@@ -1,0 +1,18 @@
+tx_begin V
+tx_op V search record artist Beatles
+tx_op V search record artist Mozart
+tx_op V search record artist Beethoven
+tx_op V search record artist Bach
+tx_op V search record artist Beyonce
+tx_op V search record artist Drake
+tx_op V search record artist Adele
+tx_op V search record artist Radiohead
+tx_op V search record artist Bjork
+tx_op V search record artist Aphex
+tx_op V search record artist Kendrick
+tx_op V search record artist Solange
+tx_op V search record artist Burial
+tx_op V range_search artist debut_year 1700 1800
+tx_op V range_search artist debut_year 1950 2000
+tx_op V range_search artist debut_year 1980 1990
+tx_commit V

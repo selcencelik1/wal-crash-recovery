@@ -1,0 +1,7 @@
+tx_begin T8
+tx_op T8 create record book Ulysses Joyce 1922 20
+tx_op T8 create record book Beloved Morrison 1987 45
+tx_commit T8
+tx_begin T9
+tx_op T9 create record book Catch22 Heller 1961 65
+tx_commit T9

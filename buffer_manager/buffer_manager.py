@@ -16,9 +16,13 @@ from models import BufferResult, PageResult
 
 
 class BufferManager:
-    def __init__(self, config: dict, disk):
+    def __init__(self, config: dict, disk, recovery=None):
         self.config = config
         self.disk = disk
+        # RecoveryManager (cross-cutting): logs every page write and enforces
+        # WAL #1 before any dirty page is allowed to reach disk. None means the
+        # engine is running without recovery (plain Project-3 behaviour).
+        self.recovery = recovery
         self.pool_size: int = int(config.get("buffer_pool_size", 16))
         if self.pool_size < 1:
             raise ValueError("buffer_pool_size must be at least 1")
@@ -70,9 +74,12 @@ class BufferManager:
         evicted_data = self.pool[evicted_key]
         was_dirty = self.dirty.get(evicted_key, False)
         if was_dirty:
+            self._wal_before_flush(evicted_data)        # WAL #1
             result = self.disk.write_page(evicted_key[0], evicted_key[1], evicted_data)
             if not result.success:
                 return evicted_key[1], True, result.error
+            if self.recovery is not None:
+                self.recovery.page_flushed(evicted_key[0], evicted_key[1])
             self.dirty_writebacks += 1
 
         self.pool.pop(evicted_key)
@@ -158,6 +165,13 @@ class BufferManager:
                 status="failure", error=error,
             )
 
+        # WAL: log the change (capturing the before-image) and receive the
+        # page bytes with the new pageLSN stamped into the header. A log record
+        # is now guaranteed to precede this page ever reaching disk.
+        if self.recovery is not None:
+            before = self._current_bytes(file_id, page_id)
+            data = self.recovery.log_page_update(file_id, page_id, before, data)
+
         if key in self.pool:
             self.hits += 1
             self.pool[key] = data
@@ -227,11 +241,35 @@ class BufferManager:
     def flush(self) -> None:
         for key, data in list(self.pool.items()):
             if self.dirty.get(key, False):
+                self._wal_before_flush(data)            # WAL #1
                 result = self.disk.write_page(key[0], key[1], data)
                 if result.success:
                     self.dirty[key] = False
+                    if self.recovery is not None:
+                        self.recovery.page_flushed(key[0], key[1])
                 else:
                     raise RuntimeError(result.error)
+
+    # ------------------------------------------------------------------ #
+    # WAL helpers
+    # ------------------------------------------------------------------ #
+    def _wal_before_flush(self, data: bytes) -> None:
+        """WAL #1: a dirty page with pageLSN L must not hit disk until every
+        log record up to L is durable."""
+        if self.recovery is not None:
+            self.recovery.flush_log_up_to(self.recovery.page_lsn_of(data))
+
+    def _current_bytes(self, file_id: str, page_id: int):
+        """Return the page's current bytes (the before-image for logging):
+        from the pool if cached, else from disk, else None for a brand-new page."""
+        key = (file_id, page_id)
+        if key in self.pool:
+            return self.pool[key]
+        if self.disk.file_exists(file_id) and page_id < self.disk.num_pages(file_id):
+            pr = self.disk.read_page(file_id, page_id)
+            if pr.status == "success":
+                return pr.data
+        return None
 
     # ------------------------------------------------------------------ #
     # stats

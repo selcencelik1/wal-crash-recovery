@@ -1,0 +1,20 @@
+tx_begin T1
+tx_op T1 create type product 5 1 sku str name str price int stock int rating int
+tx_op T1 create record product P001 Widget 100 50 80
+tx_op T1 create record product P002 Gadget 200 30 90
+tx_op T1 create record product P003 Gizmo 150 75 70
+tx_commit T1
+tx_begin T2
+tx_op T2 create record product P004 Doohickey 75 20 60
+tx_op T2 create record product P005 Sprocket 60 100 85
+tx_op T2 create record product P006 Cog 45 200 65
+tx_commit T2
+tx_begin T3
+tx_op T3 create record product P007 Bolt 5 1000 50
+tx_op T3 create record product P008 Nut 3 500 55
+tx_begin T4
+tx_op T4 delete record product P002
+tx_commit T4
+tx_begin T5
+tx_op T5 create record product P009 Washer 2 300 40
+crash

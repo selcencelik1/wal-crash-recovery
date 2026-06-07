@@ -342,16 +342,17 @@ class FileIndexManager:
                 strategy=self.index_strategy, status="failure",
                 error="range_search requires an integer field",
             )
+        pk_idx = meta["primary_key_order"] - 1
 
         try:
             # Hash → falls back to heap_scan (per spec).
             if self.index_strategy == "hash_index":
                 res = heap_scan.range_search(self.buffer, meta, field_name, low, high)
                 res.strategy = "heap_scan"  # report the *actual* strategy used
+                res.records = self._order_range(res.records, fidx, pk_idx)
                 return res
 
             # B+ tree only helps if the range field is the primary key.
-            pk_idx = meta["primary_key_order"] - 1
             if self.index_strategy == "bplus_tree" and pk_idx == fidx:
                 tree = BPlusTree(self.buffer, self.page_size, meta)
                 ptrs, leaves, nodes_visited = tree.range_search(
@@ -365,14 +366,16 @@ class FileIndexManager:
                     if values is not None:
                         records.append(values)
                 return RecordResult(
-                    records=records,
+                    records=self._order_range(records, fidx, pk_idx),
                     pages_accessed=pa + leaves,
                     index_nodes_visited=nodes_visited,
                     records_scanned=len(ptrs),
                     strategy="bplus_tree",
                 )
 
-            return heap_scan.range_search(self.buffer, meta, field_name, low, high)
+            res = heap_scan.range_search(self.buffer, meta, field_name, low, high)
+            res.records = self._order_range(res.records, fidx, pk_idx)
+            return res
         except RuntimeError as e:
             return RecordResult(
                 strategy=self.index_strategy,
@@ -415,6 +418,12 @@ class FileIndexManager:
     # ================================================================ #
     # internal helpers
     # ================================================================ #
+    @staticmethod
+    def _order_range(records: List, fidx: int, pk_idx: int) -> List:
+        """Spec §9 ordering: non-decreasing by the searched field, ties broken
+        by primary key ascending. Applies regardless of index strategy."""
+        return sorted(records, key=lambda r: (r[fidx], r[pk_idx]))
+
     def _coerce_values(self, meta: dict, raw_values: List[str]) -> List:
         out = []
         for (fname, ftype), raw in zip(meta["fields"], raw_values):

@@ -1,0 +1,9 @@
+tx_begin T1
+tx_op T1 create type artist 4 1 name str genre str country str debut_year int
+tx_op T1 create record artist Beatles Rock UK 1960
+tx_op T1 create record artist Mozart Classical Austria 1762
+tx_op T1 create record artist Beethoven Classical Germany 1782
+tx_commit T1
+tx_begin T2
+tx_op T2 create record artist Bach Classical Germany 1703
+crash

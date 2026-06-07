@@ -47,7 +47,7 @@ MAX_TYPES_PER_PAGE = MAX_SLOTS  # 10 types per catalog page
 
 TYPE_NAME_LEN = 16
 FIELD_NAME_LEN = 24
-MIN_FIELDS = 6          # spec: "at least 6 fields per type"
+MIN_FIELDS = 1          # Project 4 test types use as few as 4 fields
 MAX_FIELDS = 12         # documented cap so the catalog entry stays fixed-size
 FIELD_TYPE_INT = 0
 FIELD_TYPE_STR = 1

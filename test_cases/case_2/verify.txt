@@ -1,0 +1,30 @@
+tx_begin V
+tx_op V search record movie Inception
+tx_op V search record movie Memento
+tx_op V search record movie Interstellar
+tx_op V search record movie Tenet
+tx_op V search record movie Dunkirk
+tx_op V search record movie Parasite
+tx_op V search record movie Memories
+tx_op V search record movie Mother
+tx_op V search record movie Oldboy
+tx_op V search record movie Burning
+tx_op V search record movie Akira
+tx_op V search record movie Spirited
+tx_op V search record movie Totoro
+tx_op V search record movie Princess
+tx_op V search record movie Mononoke
+tx_op V search record movie Ghost
+tx_op V search record movie Howl
+tx_op V search record movie LaLa
+tx_op V search record movie FirstMan
+tx_op V search record movie Whiplash
+tx_op V search record movie Babylon
+tx_op V search record movie Drive
+tx_op V search record movie Bronson
+tx_op V search record movie Valhalla
+tx_op V range_search movie year 1980 2000
+tx_op V range_search movie year 2010 2025
+tx_op V range_search movie rating 85 100
+tx_op V range_search movie duration 80 110
+tx_commit V

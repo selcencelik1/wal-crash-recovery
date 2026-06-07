@@ -1,0 +1,10 @@
+tx_begin T8
+tx_begin T9
+tx_op T8 create record product P016 Pulley 40 70 72
+tx_op T9 create record product P017 Bearing 35 110 78
+tx_op T8 create record product P018 Chain 28 120 68
+tx_op T9 create record product P019 Belt 32 95 73
+tx_op T8 create record product P020 Sprocket2 50 85 71
+tx_commit T9
+tx_op T8 delete record product P010
+tx_commit T8

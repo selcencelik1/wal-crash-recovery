@@ -1,0 +1,10 @@
+tx_begin T8
+tx_op T8 delete record artist Drake
+tx_commit T8
+tx_begin T9
+tx_op T9 create record artist Kendrick Hip UnitedStates 1987
+tx_op T9 create record artist Solange Pop UnitedStates 1986
+tx_commit T9
+tx_begin T10
+tx_op T10 create record artist Burial Electronic UK 1979
+crash

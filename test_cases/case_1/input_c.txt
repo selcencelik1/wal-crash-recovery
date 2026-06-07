@@ -1,0 +1,10 @@
+tx_begin T5
+tx_op T5 create record book MobyDick Melville 1851 25
+tx_op T5 create record book WarPeace Tolstoy 1869 30
+tx_commit T5
+tx_begin T6
+tx_op T6 delete record book Dune
+tx_commit T6
+tx_begin T7
+tx_op T7 create record book Lolita Nabokov 1955 35
+crash

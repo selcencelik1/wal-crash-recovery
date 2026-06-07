@@ -30,6 +30,13 @@ class DiskSpaceManager:
 
         self.log_write = self._default_log_write
 
+        # ── WAL log file (owned by the RecoveryManager, never buffered) ──
+        # The DiskSpaceManager performs the real file I/O for it (spec 6.1):
+        # a dedicated append-only file, separate from data files, with an
+        # explicit fsync the RecoveryManager can force on commit.
+        self.wal_path: str = os.path.join(self.data_dir, "wal.log")
+        self._wal_handle = None
+
         self._scan_existing_files()
 
     # ------------------------------------------------------------------ #
@@ -37,6 +44,33 @@ class DiskSpaceManager:
     # ------------------------------------------------------------------ #
     def _default_log_write(self, file_id: str, page_id: int, data: bytes) -> None:
         return None
+
+    # ------------------------------------------------------------------ #
+    # WAL log I/O — a dedicated append-only file outside the buffer pool
+    # ------------------------------------------------------------------ #
+    def log_append(self, line: str) -> None:
+        """Append one already-serialised log record line to wal.log.
+
+        The handle is flushed on every call so records reach the OS before a
+        crash; os._exit(1) skips Python's buffers, so we must not rely on them.
+        """
+        if self._wal_handle is None:
+            self._wal_handle = open(self.wal_path, "a")
+        self._wal_handle.write(line + "\n")
+        self._wal_handle.flush()
+
+    def log_fsync(self) -> None:
+        """Force wal.log to stable storage (WAL #2 durability on commit)."""
+        if self._wal_handle is not None:
+            self._wal_handle.flush()
+            os.fsync(self._wal_handle.fileno())
+
+    def log_read_lines(self) -> list:
+        """Return wal.log as a list of raw lines (empty if it does not exist)."""
+        if not os.path.exists(self.wal_path):
+            return []
+        with open(self.wal_path, "r") as f:
+            return f.read().splitlines()
 
 
 

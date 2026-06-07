@@ -1,0 +1,8 @@
+tx_begin T11
+tx_begin T12
+tx_op T11 create record movie Drive Refn 2011 78 100
+tx_op T12 create record movie Bronson Refn 2008 73 92
+tx_op T11 delete record movie Totoro
+tx_op T12 create record movie Valhalla Refn 2009 64 93
+tx_commit T11
+tx_commit T12

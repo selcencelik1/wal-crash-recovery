@@ -1,0 +1,7 @@
+tx_begin T3
+tx_op T3 delete record artist Mozart
+tx_commit T3
+tx_begin T4
+tx_op T4 create record artist Beyonce Pop USA 1981
+tx_op T4 create record artist Drake HipHop Canada 1986
+crash

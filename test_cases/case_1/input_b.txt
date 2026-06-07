@@ -1,0 +1,7 @@
+tx_begin T3
+tx_op T3 create record book Tehanu LeGuin 1990 40
+tx_op T3 create record book Earthsea LeGuin 1968 55
+tx_commit T3
+tx_begin T4
+tx_op T4 delete record book Foundation
+crash

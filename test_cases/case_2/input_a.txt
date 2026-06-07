@@ -1,0 +1,10 @@
+tx_begin T1
+tx_op T1 create type movie 5 1 title str director str year int rating int duration int
+tx_op T1 create record movie Inception Nolan 2010 90 148
+tx_begin T2
+tx_op T2 create record movie Interstellar Nolan 2014 85 169
+tx_op T1 create record movie Memento Nolan 2000 80 113
+tx_op T2 create record movie Tenet Nolan 2020 70 150
+tx_commit T1
+tx_op T2 create record movie Dunkirk Nolan 2017 75 106
+crash

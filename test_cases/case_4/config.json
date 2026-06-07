@@ -1,0 +1,10 @@
+{
+  "page_size": 4096,
+  "max_records_per_page": 10,
+  "buffer_pool_size": 8,
+  "replacement_policy": "LRU",
+  "index_strategy": "heap_scan",
+  "checkpoint_interval": 5,
+  "log_buffer_size": 4,
+  "data_dir": "data"
+}

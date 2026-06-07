@@ -1,0 +1,9 @@
+tx_begin T3
+tx_begin T4
+tx_op T3 create record movie Parasite Bong 2019 95 132
+tx_op T4 create record movie Oldboy Park 2003 80 120
+tx_op T3 create record movie Memories Bong 2003 88 130
+tx_op T4 create record movie Burning Lee 2018 78 148
+tx_commit T4
+tx_op T3 create record movie Mother Bong 2009 84 129
+tx_commit T3

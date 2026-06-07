@@ -1,0 +1,3 @@
+tx_begin T5
+tx_op T5 create record artist Adele Pop UK 1988
+tx_commit T5

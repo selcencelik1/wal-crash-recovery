@@ -1,0 +1,38 @@
+tx_begin V
+tx_op V search record product P001
+tx_op V search record product P002
+tx_op V search record product P003
+tx_op V search record product P004
+tx_op V search record product P005
+tx_op V search record product P006
+tx_op V search record product P007
+tx_op V search record product P008
+tx_op V search record product P009
+tx_op V search record product P010
+tx_op V search record product P011
+tx_op V search record product P012
+tx_op V search record product P013
+tx_op V search record product P014
+tx_op V search record product P015
+tx_op V search record product P016
+tx_op V search record product P017
+tx_op V search record product P018
+tx_op V search record product P019
+tx_op V search record product P020
+tx_op V search record product P021
+tx_op V search record product P022
+tx_op V search record product P023
+tx_op V search record product P024
+tx_op V search record product P025
+tx_op V search record product P026
+tx_op V search record product P027
+tx_op V search record product P028
+tx_op V search record product P029
+tx_op V search record product P030
+tx_op V search record product P031
+tx_op V search record product P032
+tx_op V range_search product price 1 30
+tx_op V range_search product stock 1 100
+tx_op V range_search product rating 70 80
+tx_op V range_search product price 500 1000
+tx_commit V

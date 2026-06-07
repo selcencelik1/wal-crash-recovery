@@ -20,11 +20,16 @@ from models import RecordResult
 
 
 class QueryProcessor:
-    def __init__(self, config: dict, file_idx, buffer, disk):
+    def __init__(self, config: dict, file_idx, buffer, disk, recovery=None):
         self.config = config
         self.file_idx = file_idx
         self.buffer = buffer
         self.disk = disk
+        # RecoveryManager — drives transaction control (begin/commit) and tells
+        # the WAL which transaction a tx_op's writes belong to.
+        self.recovery = recovery
+        # Open transactions: input-file label (e.g. "T1", "alice") -> internal XID.
+        self.open_tx = {}
 
         # Output destinations live next to archive.py, independent of cwd
         # and independent of any config-provided paths.
@@ -57,22 +62,86 @@ class QueryProcessor:
         op = tokens[0].lower()
 
         try:
-            if op == "create":
-                self._handle_create(tokens, line)
-            elif op == "delete":
-                self._handle_delete(tokens, line)
-            elif op == "search":
-                self._handle_search(tokens, line)
-            elif op == "range_search":
-                self._handle_range_search(tokens, line)
-            elif op == "explain":
-                self._handle_explain(tokens, line)
-            elif op == "stats":
-                self._handle_stats(tokens, line)
-            else:
+            # ── transaction control + crash simulation ──
+            if op == "tx_begin":
+                self._tx_begin(tokens, line)
+            elif op == "tx_op":
+                self._tx_op(tokens, line)
+            elif op == "tx_commit":
+                self._tx_commit(tokens, line)
+            elif op == "crash":
+                # Simulate a power failure: terminate mid-flight. No log flush,
+                # no destructors, no cleanup — exactly as the spec demands.
+                os._exit(1)
+            # ── debugging / observability commands (allowed outside a tx) ──
+            elif op in ("explain", "stats"):
+                self._dispatch(tokens, line)
+            # ── bare data operations are invalid outside a transaction ──
+            elif op in ("create", "delete", "search", "range_search") \
+                    and self.recovery is not None:
                 self._log(line, "failure")
-        except Exception as e:
+            else:
+                self._dispatch(tokens, line)
+        except Exception:
             # Never crash the system on a malformed command.
+            self._log(line, "failure")
+
+    # ================================================================ #
+    # transaction control
+    # ================================================================ #
+    def _tx_begin(self, tokens: List[str], line: str) -> None:
+        if self.recovery is None or len(tokens) != 2:
+            self._log(line, "failure")
+            return
+        name = tokens[1]
+        if name in self.open_tx:
+            self._log(line, "failure")
+            return
+        self.open_tx[name] = self.recovery.begin_transaction()
+        self._log(line, "success")
+
+    def _tx_op(self, tokens: List[str], line: str) -> None:
+        if self.recovery is None or len(tokens) < 3:
+            self._log(line, "failure")
+            return
+        name = tokens[1]
+        if name not in self.open_tx:
+            self._log(line, "failure")
+            return
+        inner_tokens = tokens[2:]
+        # Attribute every page write of this operation to the transaction.
+        self.recovery.current_xid = self.open_tx[name]
+        try:
+            self._dispatch(inner_tokens, line)
+        finally:
+            self.recovery.current_xid = None
+
+    def _tx_commit(self, tokens: List[str], line: str) -> None:
+        if self.recovery is None or len(tokens) != 2 or tokens[1] not in self.open_tx:
+            self._log(line, "failure")
+            return
+        xid = self.open_tx.pop(tokens[1])
+        self.recovery.commit(xid)
+        self._log(line, "success")
+
+    # ================================================================ #
+    # data / debugging command dispatch
+    # ================================================================ #
+    def _dispatch(self, tokens: List[str], line: str) -> None:
+        op = tokens[0].lower()
+        if op == "create":
+            self._handle_create(tokens, line)
+        elif op == "delete":
+            self._handle_delete(tokens, line)
+        elif op == "search":
+            self._handle_search(tokens, line)
+        elif op == "range_search":
+            self._handle_range_search(tokens, line)
+        elif op == "explain":
+            self._handle_explain(tokens, line)
+        elif op == "stats":
+            self._handle_stats(tokens, line)
+        else:
             self._log(line, "failure")
 
     # ================================================================ #

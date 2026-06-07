@@ -1,0 +1,10 @@
+{
+  "page_size": 4096,
+  "max_records_per_page": 10,
+  "buffer_pool_size": 16,
+  "replacement_policy": "LRU",
+  "index_strategy": "bplus_tree",
+  "checkpoint_interval": 50,
+  "log_buffer_size": 8,
+  "data_dir": "data"
+}

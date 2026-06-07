@@ -1,0 +1,8 @@
+tx_begin T10
+tx_op T10 create record book Beloved2 Morrison 2000 12
+tx_op T10 create record book Sula Morrison 1973 18
+tx_begin T11
+tx_op T11 create record book Slaughter Vonnegut 1969 90
+tx_commit T10
+tx_op T11 delete record book SnowCrash
+tx_commit T11

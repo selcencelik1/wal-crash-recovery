@@ -1,0 +1,8 @@
+tx_begin T6
+tx_op T6 create record artist Radiohead Rock UK 1985
+tx_op T6 create record artist Bjork Pop Iceland 1977
+tx_commit T6
+tx_begin T7
+tx_op T7 create record artist Aphex Electronic UK 1985
+tx_op T7 delete record artist Beatles
+crash
