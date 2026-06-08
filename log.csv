@@ -8620,3 +8620,526 @@
 1780917026,tx_op V range_search product rating 70 80,success
 1780917026,tx_op V range_search product price 500 1000,success
 1780917026,tx_commit V,success
+1780922665,tx_begin T1,success
+1780922665,tx_op T1 create type product 5 1 sku str name str price int stock int rating int,success
+1780922665,tx_op T1 create record product P001 Widget 100 50 80,success
+1780922665,tx_op T1 create record product P002 Gadget 200 30 90,success
+1780922665,tx_op T1 create record product P003 Gizmo 150 75 70,success
+1780922665,tx_commit T1,success
+1780922665,tx_begin T2,success
+1780922665,tx_op T2 create record product P004 Doohickey 75 20 60,success
+1780922665,tx_op T2 create record product P005 Sprocket 60 100 85,success
+1780922665,tx_op T2 create record product P006 Cog 45 200 65,success
+1780922665,tx_commit T2,success
+1780922665,tx_begin T3,success
+1780922665,tx_op T3 create record product P007 Bolt 5 1000 50,success
+1780922665,tx_op T3 create record product P008 Nut 3 500 55,success
+1780922665,tx_begin T4,success
+1780922665,tx_op T4 delete record product P002,success
+1780922665,tx_commit T4,success
+1780922665,tx_begin T5,success
+1780922665,tx_op T5 create record product P009 Washer 2 300 40,success
+1780922665,tx_begin T6,success
+1780922665,tx_op T6 create record product P010 Bracket 25 40 70,success
+1780922665,tx_op T6 create record product P011 Hinge 30 60 75,success
+1780922665,tx_op T6 create record product P012 Latch 18 90 60,success
+1780922665,tx_op T6 create record product P013 Knob 12 150 55,success
+1780922665,tx_op T6 create record product P014 Lever 22 80 65,success
+1780922665,tx_commit T6,success
+1780922665,tx_begin T7,success
+1780922665,tx_op T7 create record product P015 Spring 5 500 50,success
+1780922665,tx_begin T8,success
+1780922665,tx_begin T9,success
+1780922665,tx_op T8 create record product P016 Pulley 40 70 72,success
+1780922665,tx_op T9 create record product P017 Bearing 35 110 78,success
+1780922665,tx_op T8 create record product P018 Chain 28 120 68,success
+1780922665,tx_op T9 create record product P019 Belt 32 95 73,success
+1780922665,tx_op T8 create record product P020 Sprocket2 50 85 71,success
+1780922665,tx_commit T9,success
+1780922665,tx_op T8 delete record product P010,success
+1780922665,tx_commit T8,success
+1780922665,tx_begin T10,success
+1780922665,tx_op T10 create record product P021 Gear 55 45 82,success
+1780922665,tx_op T10 create record product P022 Bushing 15 200 58,success
+1780922665,tx_op T10 create record product P023 Coupling 65 35 76,success
+1780922665,tx_op T10 create record product P024 Shaft 80 25 88,success
+1780922665,tx_op T10 create record product P025 Bearing2 38 90 74,success
+1780922665,tx_op T10 delete record product P011,success
+1780922665,tx_commit T10,success
+1780922665,tx_begin T11,success
+1780922665,tx_op T11 create record product P026 Flange 95 15 67,success
+1780922665,tx_op T11 create record product P027 Bolt2 7 800 52,success
+1780922665,tx_op T11 create record product P028 Nut2 4 600 48,success
+1780922665,tx_begin T12,success
+1780922665,tx_op T12 create record product P029 Strap 14 220 62,success
+1780922665,tx_op T12 create record product P030 Clip 9 350 58,success
+1780922665,tx_op T12 create record product P031 Pin 6 700 52,success
+1780922665,tx_op T12 delete record product P020,success
+1780922665,tx_commit T12,success
+1780922665,tx_begin T13,success
+1780922665,tx_op T13 create record product P032 Cap 11 280 64,success
+1780922665,tx_commit T13,success
+1780922665,tx_begin V,success
+1780922665,tx_op V search record product P001,success
+1780922665,tx_op V search record product P002,failure
+1780922665,tx_op V search record product P003,success
+1780922665,tx_op V search record product P004,success
+1780922665,tx_op V search record product P005,success
+1780922665,tx_op V search record product P006,success
+1780922665,tx_op V search record product P007,success
+1780922665,tx_op V search record product P008,failure
+1780922665,tx_op V search record product P009,failure
+1780922665,tx_op V search record product P010,failure
+1780922665,tx_op V search record product P011,failure
+1780922665,tx_op V search record product P012,success
+1780922665,tx_op V search record product P013,success
+1780922665,tx_op V search record product P014,success
+1780922665,tx_op V search record product P015,failure
+1780922665,tx_op V search record product P016,success
+1780922665,tx_op V search record product P017,success
+1780922665,tx_op V search record product P018,success
+1780922665,tx_op V search record product P019,success
+1780922665,tx_op V search record product P020,failure
+1780922665,tx_op V search record product P021,success
+1780922665,tx_op V search record product P022,success
+1780922665,tx_op V search record product P023,success
+1780922665,tx_op V search record product P024,success
+1780922665,tx_op V search record product P025,success
+1780922665,tx_op V search record product P026,failure
+1780922665,tx_op V search record product P027,failure
+1780922665,tx_op V search record product P028,failure
+1780922665,tx_op V search record product P029,success
+1780922665,tx_op V search record product P030,success
+1780922665,tx_op V search record product P031,success
+1780922665,tx_op V search record product P032,success
+1780922665,tx_op V range_search product price 1 30,success
+1780922665,tx_op V range_search product stock 1 100,success
+1780922665,tx_op V range_search product rating 70 80,success
+1780922665,tx_op V range_search product price 500 1000,success
+1780922665,tx_commit V,success
+1780922772,tx_begin T1,success
+1780922772,tx_op T1 create type book 4 1 title str author str year int copies int,success
+1780922772,tx_op T1 create record book Dune Herbert 1965 100,success
+1780922772,tx_op T1 create record book Foundation Asimov 1951 50,success
+1780922772,tx_op T1 create record book Hyperion Simmons 1989 80,success
+1780922772,tx_commit T1,success
+1780922772,tx_begin T2,success
+1780922772,tx_op T2 create record book Neuromancer Gibson 1984 75,success
+1780922772,tx_op T2 create record book SnowCrash Stephenson 1992 60,success
+1780922772,tx_begin T3,success
+1780922772,tx_op T3 create record book Tehanu LeGuin 1990 40,success
+1780922772,tx_op T3 create record book Earthsea LeGuin 1968 55,success
+1780922772,tx_commit T3,success
+1780922772,tx_begin T4,success
+1780922772,tx_op T4 delete record book Foundation,success
+1780922772,tx_begin T5,success
+1780922772,tx_op T5 create record book MobyDick Melville 1851 25,success
+1780922772,tx_op T5 create record book WarPeace Tolstoy 1869 30,success
+1780922772,tx_commit T5,success
+1780922772,tx_begin T6,success
+1780922772,tx_op T6 delete record book Dune,success
+1780922772,tx_commit T6,success
+1780922772,tx_begin T7,success
+1780922772,tx_op T7 create record book Lolita Nabokov 1955 35,success
+1780922772,tx_begin T8,success
+1780922772,tx_op T8 create record book Ulysses Joyce 1922 20,success
+1780922772,tx_op T8 create record book Beloved Morrison 1987 45,success
+1780922772,tx_commit T8,success
+1780922772,tx_begin T9,success
+1780922772,tx_op T9 create record book Catch22 Heller 1961 65,success
+1780922772,tx_commit T9,success
+1780922772,tx_begin T10,success
+1780922772,tx_op T10 create record book Beloved2 Morrison 2000 12,success
+1780922772,tx_op T10 create record book Sula Morrison 1973 18,success
+1780922772,tx_begin T11,success
+1780922772,tx_op T11 create record book Slaughter Vonnegut 1969 90,success
+1780922772,tx_commit T10,success
+1780922772,tx_op T11 delete record book SnowCrash,failure
+1780922772,tx_commit T11,success
+1780922772,tx_begin V,success
+1780922772,tx_op V search record book Dune,failure
+1780922772,tx_op V search record book Foundation,success
+1780922772,tx_op V search record book Hyperion,success
+1780922772,tx_op V search record book Neuromancer,failure
+1780922772,tx_op V search record book SnowCrash,failure
+1780922772,tx_op V search record book Tehanu,success
+1780922772,tx_op V search record book Earthsea,success
+1780922772,tx_op V search record book MobyDick,success
+1780922772,tx_op V search record book Lolita,failure
+1780922772,tx_op V search record book Ulysses,success
+1780922772,tx_op V search record book Beloved,success
+1780922772,tx_op V search record book Catch22,success
+1780922772,tx_op V search record book Beloved2,success
+1780922772,tx_op V search record book Sula,success
+1780922772,tx_op V search record book Slaughter,success
+1780922772,tx_op V range_search book year 1950 1980,success
+1780922772,tx_op V range_search book year 1850 1900,success
+1780922772,tx_op V range_search book year 2000 2025,success
+1780922772,tx_op V range_search book copies 20 50,success
+1780922772,tx_commit V,success
+1780922817,tx_begin T1,success
+1780922817,tx_op T1 create type movie 5 1 title str director str year int rating int duration int,success
+1780922817,tx_op T1 create record movie Inception Nolan 2010 90 148,success
+1780922817,tx_begin T2,success
+1780922817,tx_op T2 create record movie Interstellar Nolan 2014 85 169,success
+1780922817,tx_op T1 create record movie Memento Nolan 2000 80 113,success
+1780922817,tx_op T2 create record movie Tenet Nolan 2020 70 150,success
+1780922817,tx_commit T1,success
+1780922817,tx_op T2 create record movie Dunkirk Nolan 2017 75 106,success
+1780922817,tx_begin T3,success
+1780922817,tx_begin T4,success
+1780922817,tx_op T3 create record movie Parasite Bong 2019 95 132,success
+1780922817,tx_op T4 create record movie Oldboy Park 2003 80 120,success
+1780922817,tx_op T3 create record movie Memories Bong 2003 88 130,success
+1780922817,tx_op T4 create record movie Burning Lee 2018 78 148,success
+1780922817,tx_commit T4,success
+1780922817,tx_op T3 create record movie Mother Bong 2009 84 129,success
+1780922817,tx_commit T3,success
+1780922817,tx_begin T5,success
+1780922817,tx_begin T6,success
+1780922817,tx_begin T7,success
+1780922817,tx_op T5 create record movie Akira Otomo 1988 90 124,success
+1780922817,tx_op T6 create record movie Spirited Miyazaki 2001 92 125,success
+1780922817,tx_op T7 create record movie Princess Miyazaki 1997 89 134,success
+1780922817,tx_op T5 create record movie Ghost Oshii 1995 87 83,success
+1780922817,tx_op T6 create record movie Totoro Miyazaki 1988 93 86,success
+1780922817,tx_op T7 create record movie Howl Miyazaki 2004 86 119,success
+1780922817,tx_commit T6,success
+1780922817,tx_op T5 delete record movie Akira,success
+1780922817,tx_op T7 create record movie Mononoke Miyazaki 1997 88 134,success
+1780922817,tx_begin T8,success
+1780922817,tx_op T8 delete record movie Memento,failure
+1780922817,tx_commit T8,success
+1780922817,tx_begin T9,success
+1780922817,tx_begin T10,success
+1780922817,tx_op T9 create record movie LaLa Chazelle 2016 80 128,success
+1780922817,tx_op T10 create record movie Whiplash Chazelle 2014 87 107,success
+1780922817,tx_op T9 create record movie FirstMan Chazelle 2018 75 141,success
+1780922817,tx_commit T9,success
+1780922817,tx_op T10 create record movie Babylon Chazelle 2022 65 189,success
+1780922817,tx_commit T10,success
+1780922817,tx_begin T11,success
+1780922817,tx_begin T12,success
+1780922817,tx_op T11 create record movie Drive Refn 2011 78 100,success
+1780922817,tx_op T12 create record movie Bronson Refn 2008 73 92,success
+1780922817,tx_op T11 delete record movie Totoro,failure
+1780922817,tx_op T12 create record movie Valhalla Refn 2009 64 93,success
+1780922817,tx_commit T11,success
+1780922817,tx_commit T12,success
+1780922817,tx_begin V,success
+1780922817,tx_op V search record movie Inception,success
+1780922817,tx_op V search record movie Memento,failure
+1780922817,tx_op V search record movie Interstellar,failure
+1780922817,tx_op V search record movie Tenet,failure
+1780922817,tx_op V search record movie Dunkirk,failure
+1780922817,tx_op V search record movie Parasite,success
+1780922817,tx_op V search record movie Memories,success
+1780922817,tx_op V search record movie Mother,success
+1780922817,tx_op V search record movie Oldboy,success
+1780922817,tx_op V search record movie Burning,success
+1780922817,tx_op V search record movie Akira,failure
+1780922817,tx_op V search record movie Spirited,failure
+1780922817,tx_op V search record movie Totoro,failure
+1780922817,tx_op V search record movie Princess,failure
+1780922817,tx_op V search record movie Mononoke,failure
+1780922817,tx_op V search record movie Ghost,failure
+1780922817,tx_op V search record movie Howl,failure
+1780922817,tx_op V search record movie LaLa,success
+1780922817,tx_op V search record movie FirstMan,success
+1780922817,tx_op V search record movie Whiplash,success
+1780922817,tx_op V search record movie Babylon,success
+1780922817,tx_op V search record movie Drive,success
+1780922817,tx_op V search record movie Bronson,success
+1780922817,tx_op V search record movie Valhalla,success
+1780922817,tx_op V range_search movie year 1980 2000,success
+1780922817,tx_op V range_search movie year 2010 2025,success
+1780922817,tx_op V range_search movie rating 85 100,success
+1780922817,tx_op V range_search movie duration 80 110,success
+1780922817,tx_commit V,success
+1780923027,tx_begin T1,success
+1780923027,tx_op T1 create type book 4 1 title str author str year int copies int,success
+1780923027,tx_op T1 create record book Dune Herbert 1965 100,success
+1780923027,tx_op T1 create record book Foundation Asimov 1951 50,success
+1780923027,tx_op T1 create record book Hyperion Simmons 1989 80,success
+1780923027,tx_commit T1,success
+1780923027,tx_begin T2,success
+1780923027,tx_op T2 create record book Neuromancer Gibson 1984 75,success
+1780923027,tx_op T2 create record book SnowCrash Stephenson 1992 60,success
+1780923027,tx_begin T3,success
+1780923027,tx_op T3 create record book Tehanu LeGuin 1990 40,success
+1780923027,tx_op T3 create record book Earthsea LeGuin 1968 55,success
+1780923027,tx_commit T3,success
+1780923027,tx_begin T4,success
+1780923027,tx_op T4 delete record book Foundation,success
+1780923027,tx_begin T5,success
+1780923027,tx_op T5 create record book MobyDick Melville 1851 25,success
+1780923027,tx_op T5 create record book WarPeace Tolstoy 1869 30,success
+1780923027,tx_commit T5,success
+1780923027,tx_begin T6,success
+1780923027,tx_op T6 delete record book Dune,success
+1780923027,tx_commit T6,success
+1780923027,tx_begin T7,success
+1780923027,tx_op T7 create record book Lolita Nabokov 1955 35,success
+1780923027,tx_begin T8,success
+1780923027,tx_op T8 create record book Ulysses Joyce 1922 20,success
+1780923027,tx_op T8 create record book Beloved Morrison 1987 45,success
+1780923027,tx_commit T8,success
+1780923027,tx_begin T9,success
+1780923027,tx_op T9 create record book Catch22 Heller 1961 65,success
+1780923027,tx_commit T9,success
+1780923027,tx_begin T10,success
+1780923027,tx_op T10 create record book Beloved2 Morrison 2000 12,success
+1780923027,tx_op T10 create record book Sula Morrison 1973 18,success
+1780923027,tx_begin T11,success
+1780923027,tx_op T11 create record book Slaughter Vonnegut 1969 90,success
+1780923027,tx_commit T10,success
+1780923027,tx_op T11 delete record book SnowCrash,failure
+1780923027,tx_commit T11,success
+1780923027,tx_begin V,success
+1780923027,tx_op V search record book Dune,failure
+1780923027,tx_op V search record book Foundation,success
+1780923027,tx_op V search record book Hyperion,success
+1780923027,tx_op V search record book Neuromancer,failure
+1780923027,tx_op V search record book SnowCrash,failure
+1780923027,tx_op V search record book Tehanu,success
+1780923027,tx_op V search record book Earthsea,success
+1780923027,tx_op V search record book MobyDick,success
+1780923027,tx_op V search record book Lolita,failure
+1780923027,tx_op V search record book Ulysses,success
+1780923027,tx_op V search record book Beloved,success
+1780923027,tx_op V search record book Catch22,success
+1780923027,tx_op V search record book Beloved2,success
+1780923027,tx_op V search record book Sula,success
+1780923027,tx_op V search record book Slaughter,success
+1780923027,tx_op V range_search book year 1950 1980,success
+1780923027,tx_op V range_search book year 1850 1900,success
+1780923027,tx_op V range_search book year 2000 2025,success
+1780923027,tx_op V range_search book copies 20 50,success
+1780923027,tx_commit V,success
+1780923052,tx_begin T1,success
+1780923052,tx_op T1 create type movie 5 1 title str director str year int rating int duration int,success
+1780923052,tx_op T1 create record movie Inception Nolan 2010 90 148,success
+1780923052,tx_begin T2,success
+1780923052,tx_op T2 create record movie Interstellar Nolan 2014 85 169,success
+1780923052,tx_op T1 create record movie Memento Nolan 2000 80 113,success
+1780923052,tx_op T2 create record movie Tenet Nolan 2020 70 150,success
+1780923052,tx_commit T1,success
+1780923052,tx_op T2 create record movie Dunkirk Nolan 2017 75 106,success
+1780923052,tx_begin T3,success
+1780923052,tx_begin T4,success
+1780923052,tx_op T3 create record movie Parasite Bong 2019 95 132,success
+1780923052,tx_op T4 create record movie Oldboy Park 2003 80 120,success
+1780923052,tx_op T3 create record movie Memories Bong 2003 88 130,success
+1780923052,tx_op T4 create record movie Burning Lee 2018 78 148,success
+1780923052,tx_commit T4,success
+1780923052,tx_op T3 create record movie Mother Bong 2009 84 129,success
+1780923052,tx_commit T3,success
+1780923052,tx_begin T5,success
+1780923052,tx_begin T6,success
+1780923052,tx_begin T7,success
+1780923052,tx_op T5 create record movie Akira Otomo 1988 90 124,success
+1780923052,tx_op T6 create record movie Spirited Miyazaki 2001 92 125,success
+1780923052,tx_op T7 create record movie Princess Miyazaki 1997 89 134,success
+1780923052,tx_op T5 create record movie Ghost Oshii 1995 87 83,success
+1780923052,tx_op T6 create record movie Totoro Miyazaki 1988 93 86,success
+1780923052,tx_op T7 create record movie Howl Miyazaki 2004 86 119,success
+1780923052,tx_commit T6,success
+1780923052,tx_op T5 delete record movie Akira,success
+1780923052,tx_op T7 create record movie Mononoke Miyazaki 1997 88 134,success
+1780923052,tx_begin T8,success
+1780923052,tx_op T8 delete record movie Memento,success
+1780923052,tx_commit T8,success
+1780923052,tx_begin T9,success
+1780923052,tx_begin T10,success
+1780923052,tx_op T9 create record movie LaLa Chazelle 2016 80 128,success
+1780923052,tx_op T10 create record movie Whiplash Chazelle 2014 87 107,success
+1780923052,tx_op T9 create record movie FirstMan Chazelle 2018 75 141,success
+1780923052,tx_commit T9,success
+1780923052,tx_op T10 create record movie Babylon Chazelle 2022 65 189,success
+1780923052,tx_commit T10,success
+1780923052,tx_begin T11,success
+1780923052,tx_begin T12,success
+1780923052,tx_op T11 create record movie Drive Refn 2011 78 100,success
+1780923052,tx_op T12 create record movie Bronson Refn 2008 73 92,success
+1780923052,tx_op T11 delete record movie Totoro,success
+1780923052,tx_op T12 create record movie Valhalla Refn 2009 64 93,success
+1780923052,tx_commit T11,success
+1780923052,tx_commit T12,success
+1780923052,tx_begin V,success
+1780923052,tx_op V search record movie Inception,success
+1780923052,tx_op V search record movie Memento,failure
+1780923052,tx_op V search record movie Interstellar,failure
+1780923052,tx_op V search record movie Tenet,failure
+1780923052,tx_op V search record movie Dunkirk,failure
+1780923052,tx_op V search record movie Parasite,success
+1780923052,tx_op V search record movie Memories,success
+1780923052,tx_op V search record movie Mother,success
+1780923052,tx_op V search record movie Oldboy,success
+1780923052,tx_op V search record movie Burning,success
+1780923052,tx_op V search record movie Akira,failure
+1780923052,tx_op V search record movie Spirited,success
+1780923052,tx_op V search record movie Totoro,failure
+1780923052,tx_op V search record movie Princess,failure
+1780923052,tx_op V search record movie Mononoke,failure
+1780923052,tx_op V search record movie Ghost,failure
+1780923052,tx_op V search record movie Howl,failure
+1780923052,tx_op V search record movie LaLa,success
+1780923052,tx_op V search record movie FirstMan,success
+1780923052,tx_op V search record movie Whiplash,success
+1780923052,tx_op V search record movie Babylon,success
+1780923052,tx_op V search record movie Drive,success
+1780923052,tx_op V search record movie Bronson,success
+1780923052,tx_op V search record movie Valhalla,success
+1780923052,tx_op V range_search movie year 1980 2000,success
+1780923052,tx_op V range_search movie year 2010 2025,success
+1780923052,tx_op V range_search movie rating 85 100,success
+1780923052,tx_op V range_search movie duration 80 110,success
+1780923052,tx_commit V,success
+1780923066,tx_begin T1,success
+1780923066,tx_op T1 create type artist 4 1 name str genre str country str debut_year int,success
+1780923066,tx_op T1 create record artist Beatles Rock UK 1960,success
+1780923066,tx_op T1 create record artist Mozart Classical Austria 1762,success
+1780923066,tx_op T1 create record artist Beethoven Classical Germany 1782,success
+1780923066,tx_commit T1,success
+1780923066,tx_begin T2,success
+1780923066,tx_op T2 create record artist Bach Classical Germany 1703,success
+1780923066,tx_begin T3,success
+1780923066,tx_op T3 delete record artist Mozart,success
+1780923066,tx_commit T3,success
+1780923066,tx_begin T4,success
+1780923066,tx_op T4 create record artist Beyonce Pop USA 1981,success
+1780923066,tx_op T4 create record artist Drake HipHop Canada 1986,success
+1780923066,tx_begin T5,success
+1780923066,tx_op T5 create record artist Adele Pop UK 1988,success
+1780923066,tx_commit T5,success
+1780923066,tx_begin T6,success
+1780923066,tx_op T6 create record artist Radiohead Rock UK 1985,success
+1780923066,tx_op T6 create record artist Bjork Pop Iceland 1977,success
+1780923066,tx_commit T6,success
+1780923066,tx_begin T7,success
+1780923066,tx_op T7 create record artist Aphex Electronic UK 1985,success
+1780923066,tx_op T7 delete record artist Beatles,success
+1780923066,tx_begin T8,success
+1780923066,tx_op T8 delete record artist Drake,failure
+1780923066,tx_commit T8,success
+1780923066,tx_begin T9,success
+1780923066,tx_op T9 create record artist Kendrick Hip UnitedStates 1987,success
+1780923066,tx_op T9 create record artist Solange Pop UnitedStates 1986,success
+1780923066,tx_commit T9,success
+1780923066,tx_begin T10,success
+1780923066,tx_op T10 create record artist Burial Electronic UK 1979,success
+1780923066,tx_begin V,success
+1780923066,tx_op V search record artist Beatles,success
+1780923066,tx_op V search record artist Mozart,failure
+1780923066,tx_op V search record artist Beethoven,success
+1780923066,tx_op V search record artist Bach,failure
+1780923066,tx_op V search record artist Beyonce,failure
+1780923066,tx_op V search record artist Drake,failure
+1780923066,tx_op V search record artist Adele,success
+1780923066,tx_op V search record artist Radiohead,success
+1780923066,tx_op V search record artist Bjork,success
+1780923066,tx_op V search record artist Aphex,failure
+1780923066,tx_op V search record artist Kendrick,success
+1780923066,tx_op V search record artist Solange,success
+1780923066,tx_op V search record artist Burial,failure
+1780923066,tx_op V range_search artist debut_year 1700 1800,success
+1780923066,tx_op V range_search artist debut_year 1950 2000,success
+1780923066,tx_op V range_search artist debut_year 1980 1990,success
+1780923066,tx_commit V,success
+1780923081,tx_begin T1,success
+1780923081,tx_op T1 create type product 5 1 sku str name str price int stock int rating int,success
+1780923081,tx_op T1 create record product P001 Widget 100 50 80,success
+1780923081,tx_op T1 create record product P002 Gadget 200 30 90,success
+1780923081,tx_op T1 create record product P003 Gizmo 150 75 70,success
+1780923081,tx_commit T1,success
+1780923081,tx_begin T2,success
+1780923081,tx_op T2 create record product P004 Doohickey 75 20 60,success
+1780923081,tx_op T2 create record product P005 Sprocket 60 100 85,success
+1780923081,tx_op T2 create record product P006 Cog 45 200 65,success
+1780923081,tx_commit T2,success
+1780923081,tx_begin T3,success
+1780923081,tx_op T3 create record product P007 Bolt 5 1000 50,success
+1780923081,tx_op T3 create record product P008 Nut 3 500 55,success
+1780923081,tx_begin T4,success
+1780923081,tx_op T4 delete record product P002,success
+1780923081,tx_commit T4,success
+1780923081,tx_begin T5,success
+1780923081,tx_op T5 create record product P009 Washer 2 300 40,success
+1780923081,tx_begin T6,success
+1780923081,tx_op T6 create record product P010 Bracket 25 40 70,success
+1780923081,tx_op T6 create record product P011 Hinge 30 60 75,success
+1780923081,tx_op T6 create record product P012 Latch 18 90 60,success
+1780923081,tx_op T6 create record product P013 Knob 12 150 55,success
+1780923081,tx_op T6 create record product P014 Lever 22 80 65,success
+1780923081,tx_commit T6,success
+1780923081,tx_begin T7,success
+1780923081,tx_op T7 create record product P015 Spring 5 500 50,success
+1780923081,tx_begin T8,success
+1780923081,tx_begin T9,success
+1780923081,tx_op T8 create record product P016 Pulley 40 70 72,success
+1780923081,tx_op T9 create record product P017 Bearing 35 110 78,success
+1780923081,tx_op T8 create record product P018 Chain 28 120 68,success
+1780923081,tx_op T9 create record product P019 Belt 32 95 73,success
+1780923081,tx_op T8 create record product P020 Sprocket2 50 85 71,success
+1780923081,tx_commit T9,success
+1780923081,tx_op T8 delete record product P010,success
+1780923081,tx_commit T8,success
+1780923081,tx_begin T10,success
+1780923081,tx_op T10 create record product P021 Gear 55 45 82,success
+1780923081,tx_op T10 create record product P022 Bushing 15 200 58,success
+1780923081,tx_op T10 create record product P023 Coupling 65 35 76,success
+1780923081,tx_op T10 create record product P024 Shaft 80 25 88,success
+1780923081,tx_op T10 create record product P025 Bearing2 38 90 74,success
+1780923081,tx_op T10 delete record product P011,success
+1780923081,tx_commit T10,success
+1780923081,tx_begin T11,success
+1780923081,tx_op T11 create record product P026 Flange 95 15 67,success
+1780923081,tx_op T11 create record product P027 Bolt2 7 800 52,success
+1780923081,tx_op T11 create record product P028 Nut2 4 600 48,success
+1780923081,tx_begin T12,success
+1780923081,tx_op T12 create record product P029 Strap 14 220 62,success
+1780923081,tx_op T12 create record product P030 Clip 9 350 58,success
+1780923081,tx_op T12 create record product P031 Pin 6 700 52,success
+1780923081,tx_op T12 delete record product P020,success
+1780923081,tx_commit T12,success
+1780923081,tx_begin T13,success
+1780923081,tx_op T13 create record product P032 Cap 11 280 64,success
+1780923081,tx_commit T13,success
+1780923081,tx_begin V,success
+1780923081,tx_op V search record product P001,success
+1780923081,tx_op V search record product P002,failure
+1780923081,tx_op V search record product P003,success
+1780923081,tx_op V search record product P004,success
+1780923081,tx_op V search record product P005,success
+1780923081,tx_op V search record product P006,success
+1780923081,tx_op V search record product P007,failure
+1780923081,tx_op V search record product P008,failure
+1780923081,tx_op V search record product P009,failure
+1780923081,tx_op V search record product P010,failure
+1780923081,tx_op V search record product P011,failure
+1780923081,tx_op V search record product P012,success
+1780923081,tx_op V search record product P013,success
+1780923081,tx_op V search record product P014,success
+1780923081,tx_op V search record product P015,failure
+1780923081,tx_op V search record product P016,success
+1780923081,tx_op V search record product P017,success
+1780923081,tx_op V search record product P018,success
+1780923081,tx_op V search record product P019,success
+1780923081,tx_op V search record product P020,failure
+1780923081,tx_op V search record product P021,success
+1780923081,tx_op V search record product P022,success
+1780923081,tx_op V search record product P023,success
+1780923081,tx_op V search record product P024,success
+1780923081,tx_op V search record product P025,success
+1780923081,tx_op V search record product P026,failure
+1780923081,tx_op V search record product P027,failure
+1780923081,tx_op V search record product P028,failure
+1780923081,tx_op V search record product P029,success
+1780923081,tx_op V search record product P030,success
+1780923081,tx_op V search record product P031,success
+1780923081,tx_op V search record product P032,success
+1780923081,tx_op V range_search product price 1 30,success
+1780923081,tx_op V range_search product stock 1 100,success
+1780923081,tx_op V range_search product rating 70 80,success
+1780923081,tx_op V range_search product price 500 1000,success
+1780923081,tx_commit V,success
