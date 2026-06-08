@@ -3,5 +3,8 @@
   "max_records_per_page": 10,
   "buffer_pool_size": 8,
   "replacement_policy": "MRU",
-  "index_strategy": "hash_index"
+  "index_strategy": "hash_index",
+  "checkpoint_interval": 50,
+  "log_buffer_size": 8,
+  "data_dir": "data"
 }

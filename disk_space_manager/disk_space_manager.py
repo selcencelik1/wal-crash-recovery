@@ -15,7 +15,17 @@ class DiskSpaceManager:
         self.config = config
         self.page_size: int = int(config.get("page_size", 4096))
 
-        self.data_dir: str = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        # Where all storage files (*.bin, wal.log, master.rec) live. Honour
+        # the config's data_dir; a relative path is anchored to the project
+        # root (parent of this package) so it stays independent of cwd, and a
+        # absolute path is used as-is. The directory is created if missing.
+        _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        _configured = str(config.get("data_dir", "data"))
+        self.data_dir: str = (
+            _configured if os.path.isabs(_configured)
+            else os.path.join(_root, _configured)
+        )
+        os.makedirs(self.data_dir, exist_ok=True)
 
         # I/O counters
         self.read_count: int = 0
