@@ -1,0 +1,38 @@
+rm -f *.bin wal.log master.rec output.txt stats_output.txt
+
+python3 archive.py test_cases/case_1/config.json test_cases/case_1/input_a.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_1/input_b.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_1/input_c.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_1/input_d.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_1/input_e.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_1/verify.txt
+diff test_cases/case_1/expected_output.txt output.txt
+
+
+
+python3 archive.py test_cases/case_1/config.json test_cases/case_2/input_a.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_2/input_b.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_2/input_c.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_2/input_d.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_2/input_e.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_2/verify.txt
+diff test_cases/case_2/expected_output.txt output.txt
+
+
+python3 archive.py test_cases/case_1/config.json test_cases/case_3/input_a.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_3/input_b.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_3/input_c.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_3/input_d.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_3/input_e.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_3/verify.txt
+diff test_cases/case_3/expected_output.txt output.txt
+
+
+python3 archive.py test_cases/case_1/config.json test_cases/case_4/input_a.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_4/input_b.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_4/input_c.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_4/input_d.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_4/input_e.txt
+python3 archive.py test_cases/case_1/config.json test_cases/case_4/verify.txt
+diff test_cases/case_3/expected_output.txt output.txt
+
