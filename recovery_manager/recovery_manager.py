@@ -1,33 +1,18 @@
 """
 RecoveryManager — Write-Ahead Logging + a simplified ARIES crash recovery.
 
-Design note (why logging lives at the BufferManager boundary)
--------------------------------------------------------------
-Project 3's engine is strictly layered and *every* page mutation — heap,
-catalog, hash and B+tree index pages alike — funnels through a single call:
-``BufferManager.write_page(file_id, page_id, data)``.  That makes the buffer
-the one complete, leak-proof interception point for WAL.  Rather than sprinkle
-``log_update`` calls across heap_scan / catalog / hash_index / bplus_tree, the
-BufferManager hands every write to ``log_page_update`` here, which assigns the
-LSN, stamps it into the page header (pageLSN), and records the before/after
-image.  The contract the spec asks for is honoured: a log record is written
-*before* the page can ever reach disk, the page carries its pageLSN, and the
-two WAL invariants below hold.
 
-Owns:
-  - wal.log     (append-only log file, written through the DiskSpaceManager,
-                 never cached in the buffer pool)
-  - master.rec  (one-line file storing the begin_checkpoint LSN of the most
-                 recent complete checkpoint)
+Has:
 
-WAL invariants enforced:
-  WAL #1 (atomicity): BufferManager calls flush_log_up_to(pageLSN) before it
-          writes any dirty page to disk, guaranteeing flushedLSN >= pageLSN.
-  WAL #2 (durability): commit() flushes the log and os.fsync's it before
-          returning.
+- wal.log (log file for append-only, written through the DiskSpaceManager, never cached in the buffer pool)
+- master.rec (single line file containing the begin_checkpoint LSN of the last complete checkpoint)
 
-Recovery (three phases, run automatically on construction, before any input):
-  Analysis -> Redo ("repeat history") -> Undo (roll back the losers).
+Enforced WAL invariants:
+WAL #1 (atomicity): BufferManager will call flush_log_up_to(pageLSN) before writing any dirty page to disk, which guarantees that flushedLSN >= pageLSN.
+WAL #2 (durability): commit() flushes log and osfsync() it before returning.
+
+Recovery (3 phases, run automatically on construction, before any input):
+  Repeat History -> Analyze -> Undo (take back the losers)
 """
 
 import csv
@@ -36,7 +21,7 @@ import os
 from typing import Dict, List, Optional, Tuple
 
 
-# ── Log record field names (column order in wal.log) ────────────────────────
+# ── Log record field names (column order in wal.log) 
 _FIELDS = ["lsn", "prev_lsn", "xid", "type", "page_id",
            "offset", "before", "after"]
 
@@ -49,11 +34,10 @@ _NO_LSN = -1
 # Sentinel xid for checkpoint records (they belong to no transaction).
 _SYS_XID = -1
 
-
-# ── pageLSN placement inside the 32-byte page header ────────────────────────
-# page.py reserves bytes 23..31 ("reserved" field) which no other code reads,
-# so we stash the 8-byte pageLSN there.  Crucially we must NOT use byte 0
-# (page_type) or bytes 1..4 (page_id) — those carry real header data.
+# ── pageLSN placement in the 32-byte page header
+# # page.py reserves bytes 23..31 ("reserved" field) not read by any other code, 
+# # so we stash the 8-byte pageLSN there.  
+# # Importantly we should NOT use byte 0 # (page_type) or bytes 1..4 (page_id) those contain real header data.
 HEADER_SIZE      = 32
 PAGE_LSN_OFFSET  = 23
 PAGE_LSN_SIZE    = 8   # bytes (fits in the 9 reserved header bytes)
@@ -96,9 +80,7 @@ def _diff_range(a: bytes, b: bytes) -> Tuple[Optional[int], Optional[int]]:
 
 
 class RecoveryManager:
-    # ------------------------------------------------------------------
     # Construction + startup recovery
-    # ------------------------------------------------------------------
     def __init__(self, config: dict, disk):
         self.config = config
         self.disk = disk
@@ -138,9 +120,9 @@ class RecoveryManager:
         # ── Three-phase recovery, before any input is processed. ──
         self._run_recovery()
 
-    # ==================================================================
+    
     # Transaction control  (called by the QueryProcessor)
-    # ==================================================================
+    
     def begin_transaction(self) -> int:
         xid = self._next_xid
         self._next_xid += 1
@@ -160,9 +142,9 @@ class RecoveryManager:
         self._flush_log()
         self.tx_table.pop(xid, None)
 
-    # ==================================================================
+    
     # Update logging  (called by the BufferManager for every page write)
-    # ==================================================================
+    
     def log_page_update(self, file_id: str, page_id: int,
                         before: Optional[bytes], after: bytes) -> bytes:
         """Log a page modification and return the page bytes with the new
@@ -206,9 +188,9 @@ class RecoveryManager:
         self._maybe_checkpoint()
         return stamped
 
-    # ==================================================================
+  
     # WAL #1 helpers  (called by the BufferManager around dirty-page writes)
-    # ==================================================================
+  
     @staticmethod
     def page_lsn_of(data: bytes) -> int:
         return read_page_lsn(data)
@@ -223,9 +205,9 @@ class RecoveryManager:
         """A page just became clean on disk — drop it from the Dirty Page Table."""
         self.dirty_page_table.pop((file_id, page_id), None)
 
-    # ==================================================================
+    
     # Fuzzy checkpointing
-    # ==================================================================
+    
     def _maybe_checkpoint(self) -> None:
         self._ops_since_ckpt += 1
         if self._ops_since_ckpt >= self._checkpoint_interval:
@@ -276,9 +258,9 @@ class RecoveryManager:
                 out[(fid, int(pid_s))] = int(rec_s)
         return out
 
-    # ==================================================================
+    
     # Three-phase recovery
-    # ==================================================================
+    
     def _run_recovery(self) -> None:
         records = self._read_all_log_records()
         if not records:
@@ -297,7 +279,7 @@ class RecoveryManager:
                 self.tx_table.pop(xid, None)
         self._flush_log()
 
-    # ── Phase 1 — Analysis ────────────────────────────────────────────
+    # Phase 1 — Analysis 
     def _phase_analysis(self, records: List[dict], begin_ckpt_lsn: int) -> None:
         tx_snap = dpt_snap = ""
         scan_from = _NO_LSN          # process everything if there is no checkpoint
@@ -335,7 +317,7 @@ class RecoveryManager:
             elif rtype == "end":
                 self.tx_table.pop(xid, None)
 
-    # ── Phase 2 — Redo ("repeat history") ─────────────────────────────
+    # Phase 2 — Redo ("repeat history")
     def _phase_redo(self, records: List[dict]) -> None:
         if not self.dirty_page_table:
             return
@@ -374,7 +356,7 @@ class RecoveryManager:
             data[off:off + len(after)] = after
             self.disk.write_page(file_id, page_id, bytes(data))
 
-    # ── Phase 3 — Undo (roll back the losers) ─────────────────────────
+    # Phase 3 — Undo (roll back the losers)
     def _phase_undo(self, records: List[dict]) -> None:
         losers = {xid for xid, e in self.tx_table.items()
                   if e["status"] == "active"}
@@ -407,7 +389,7 @@ class RecoveryManager:
                             off = int(rec.get("offset", 0))
                             data = bytearray(pr.data)
                             # Restore ONLY the bytes this record changed; leave
-                            # the rest of the window untouched so we don't undo
+                            # the rest of the window alone so we don't undo
                             # a later committed change that shares the window.
                             for i in range(len(before)):
                                 if i >= len(after) or before[i] != after[i]:
@@ -429,9 +411,9 @@ class RecoveryManager:
             pid = self.disk.num_pages(file_id)
             self.disk.write_page(file_id, pid, b"\x00" * self.page_size)
 
-    # ==================================================================
+    
     # Log buffer / file I/O  (the log is written through the DiskSpaceManager)
-    # ==================================================================
+    
     def _emit(self, xid: int, rtype: str, **kwargs) -> int:
         lsn = self._next_lsn
         self._next_lsn += 1
@@ -505,9 +487,9 @@ class RecoveryManager:
             records.append(rec)
         return records
 
-    # ==================================================================
+    
     # Master record (the begin_checkpoint LSN of the latest complete ckpt)
-    # ==================================================================
+    
     def _write_master(self, lsn: int) -> None:
         with open(self._master_path, "w") as f:
             f.write(str(lsn))
@@ -523,9 +505,9 @@ class RecoveryManager:
         except (ValueError, OSError):
             return _NO_LSN
 
-    # ==================================================================
+    
     # Utility
-    # ==================================================================
+    
     @staticmethod
     def _parse_page_key(page_id_str: str) -> Optional[Tuple[str, int]]:
         if not page_id_str:
